@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  worker:
+    build: .
+    command: celery -A hello worker --loglevel=info
+    environment:
+      - REDIS_URL=${REDIS_URL}
+    restart: unless-stopped
+
+  beat:
+    build: .
+    command: celery -A hello beat --loglevel=info
+    environment:
+      - REDIS_URL=${REDIS_URL}
+    restart: unless-stopped
+    depends_on:
+      - worker
