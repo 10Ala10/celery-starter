@@ -15,3 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
 COPY . .
+
+# Default command - Worker (for separate services deployment)
+CMD ["celery", "-A", "hello", "worker", "--loglevel=info"]
